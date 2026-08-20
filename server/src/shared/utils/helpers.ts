@@ -61,7 +61,8 @@ export class JWTHelper {
             process.env.JWT_SECRET!,
             {
                 expiresIn: process.env.JWT_ACCESS_TOKEN_LENGTH!,
-            }
+                algorithm: 'HS256', // Specify the algorithm explicitly to avoid potential security issues
+            },
         );
     }
 
@@ -71,11 +72,12 @@ export class JWTHelper {
             process.env.JWT_SECRET!,
             {
                 expiresIn: process.env.JWT_REFRESH_TOKEN_LENGTH!,
+                algorithm: 'HS256', // Specify the algorithm explicitly to avoid potential security issues
             }
         );
     }
 
     public static verifyToken(token: string): jwt.JwtPayload | string {
-        return jwt.verify(token, process.env.JWT_SECRET!);
+        return jwt.verify(token, process.env.JWT_SECRET!, { algorithms: ['HS256'] }); // Specify the algorithm explicitly to avoid potential security issues
     }
 }
