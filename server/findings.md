@@ -45,3 +45,25 @@ The JWT helper in `src/shared/utils/helpers.ts:57-81` called `jwt.sign(...)` and
 #### Minimal Fix:
 
 Explicitly set the JWT algorithm in `src/shared/utils/helpers.ts:57-81` for both signing and verification, and reject any token whose algorithm does not match the expected allow-list.
+
+### 3. User Password Returned in Response
+
+#### Problem:
+
+`createUser` returned the created user object with its password field still present.
+
+#### Priority:
+
+P1
+
+#### Impact:
+
+An attacker or client could receive the hashed password for a newly created account, exposing sensitive credential data that should never be sent back in API responses.
+
+#### Root cause:
+
+The service in `src/api/users/user.service.ts:20-25` returned the same `user` object that was passed into `UserRepository.addUser(user)` without stripping the password field before returning it.
+
+#### Minimal Fix:
+
+Return a sanitized user object from `src/api/users/user.service.ts:20-25` that excludes `password` before sending the response, and keep the credential value only in storage.

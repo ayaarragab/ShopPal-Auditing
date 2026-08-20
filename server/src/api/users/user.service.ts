@@ -21,7 +21,8 @@ export class UserService {
         user.password = await UserService.hashPassword(user.password);
         const result = await UserRepository.addUser(user);
         user.user_id = result.raw[0].user_id;
-        return user;
+        const {password, ...userWithoutPassword} = user;
+        return userWithoutPassword as User;
     }
 
     public static async updateUser(updatedUserDetails: Partial<User>, userId: string): Promise<void> {
