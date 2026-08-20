@@ -274,7 +274,7 @@ P1
 
 #### Status:
 
-Open
+Solved
 
 #### Impact:
 

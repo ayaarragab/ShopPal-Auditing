@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import tryCatchMiddleware from '@/middlewares/tryCatch.middleware';
-import { validationMiddleware } from '@/middlewares/validation.middleware';
+import { authorizationMiddleware, validationMiddleware } from '@/middlewares';
 import ProductController from './product.controller';
 import { checkSchema } from 'express-validator';
 import ProductSchemaValidator from './product.validator';
@@ -14,6 +14,7 @@ router.get('/',
 // NOTE: create product route will not be implemented right now in the frontend
 // TODO: requires authorization based on current logged user role
 router.post('/', 
+    authorizationMiddleware,
     checkSchema(ProductSchemaValidator.createProductSchema),
     validationMiddleware,    
     tryCatchMiddleware(ProductController.createProduct));
@@ -26,6 +27,7 @@ router.get('/:product_id',
 // NOTE: update product route will not be implemented right now in the frontend
 // TODO: requires authorization based on current logged user role
 router.patch('/:product_id', 
+    authorizationMiddleware,
     checkSchema(ProductSchemaValidator.updateProductSchema),
     validationMiddleware,
     tryCatchMiddleware(ProductController.updateProduct));
