@@ -90,7 +90,7 @@ P2
 
 #### Status:
 
-Open
+Solved
 
 #### Impact:
 
@@ -248,7 +248,7 @@ P1
 
 #### Status:
 
-Open
+Solved
 
 #### Impact:
 
