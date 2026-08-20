@@ -40,7 +40,9 @@ class UserController {
         const updatedUserDetails = req.body as Partial<User>;
         await UserService.updateUser(updatedUserDetails, req.params.user_id);
 
-        res.status(HttpStatusCode.CREATED).json({ user: updatedUserDetails });
+        const { password, ...safeUpdatedUserDetails } = updatedUserDetails;
+
+        res.status(HttpStatusCode.CREATED).json({ user: safeUpdatedUserDetails });
     }
 
     public static async deleteUser(req: Request, res: Response, next: NextFunction) {
