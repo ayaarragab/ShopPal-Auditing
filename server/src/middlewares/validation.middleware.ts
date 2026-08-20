@@ -8,6 +8,7 @@ export const validationMiddleware = (req: Request, res: Response, next: NextFunc
         req.body = matchedData(req);
         return next();
     } else {
-        return res.status(400).json({ errors: errors.array({ onlyFirstError: true }) });
+        console.error('Validation errors:', errors.array({ onlyFirstError: true }));
+        return res.status(400).json({ error: 'Bad Request' }); // Return a generic error message without exposing validation details
     }
 };
